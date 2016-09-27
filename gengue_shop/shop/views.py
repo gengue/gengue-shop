@@ -27,7 +27,7 @@ class HomeView(View):
         if not self.request.user.is_anonymous():
             context['user_json'] = serializers.serialize('json', products)
 
-        paginator = Paginator(products , 10)
+        paginator = Paginator(products , 8)
         page = request.GET.get('page')
         try:
             context['products'] = paginator.page(page)

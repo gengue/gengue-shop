@@ -255,5 +255,6 @@ CKEDITOR_CONFIGS = {
             ]),
     },
 }
+THUMBNAIL_DEBUG = True 
 
 

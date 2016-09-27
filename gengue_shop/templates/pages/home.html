@@ -17,15 +17,15 @@
                     <div class="row">
                         <ul class="products">
                             {% for product in products %}
-                            <li class="product col-md-2"> <a href="/producto/{{ product.slug }}">
+                            <li class="product col-md-3"> <a href="/producto/{{ product.slug }}">
 
                                     <div class="product-image">
                                         <div class="product-image-front">
-                                            {% thumbnail product.img "500x700" crop="center" as im %}
-                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% empty %}
-                                            <img src="http://directory.africa-business.com/assets/media/noimage.png" width="500" height="700">
-                                            {% endthumbnail %}
+					{% if product.img %}
+                                            <img src="{{ product.img.url }}" width="500" height="600">
+					{% else %}
+                                            <img src="http://directory.africa-business.com/assets/media/noimage.png" width="500" height="600">
+                                        {% endif %}
                                         </div>
 
                                         <div class="product-image-overlay">
