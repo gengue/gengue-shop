@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load thumbnail %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="divider-wrapper">
+                    <div class="visible-xs element-height-30"></div>
+                    <div class="visible-sm element-height-30"></div>
+                    <div class="visible-md element-height-30"></div>
+                    <div class="visible-lg element-height-30"></div>
+                </div>
+                <div class="woocommerce columns-6">
+                    <div class="row">
+                        <ul class="products">
+                            {% for product in products %}
+                            <li class="product col-md-2"> <a href="/producto/{{ product.slug }}">
+
+                                    <div class="product-image">
+                                        <div class="product-image-front">
+                                            {% thumbnail product.img "500x700" crop="center" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% empty %}
+                                            <img src="http://directory.africa-business.com/assets/media/noimage.png" width="500" height="700">
+                                            {% endthumbnail %}
+                                        </div>
+
+                                        <div class="product-image-overlay">
+                                            <h4>Ver detalle</h4>
+                                        </div>
+                                     </div>
+                                </a>
+                                <div class="product-info">
+                                    <h3 class="product-title">
+                                        <a href="/producto/{{ product.slug }}">{{ product.name }}</a>
+                                    </h3> <span class="product-categories">
+                                        {{ product.description | striptags | truncatechars:80 | safe }}
+                                    </span>
+                                    <h3 class="price">
+                                        <ins>
+                                            <span class="amount">&#36;{{ product.price |intcomma }}
+                                            </span>
+                                        </ins>
+                                    </h3>
+                                    <a class="add-to-cart-button" href="javascript:;" title="Agregar al carrito" ng-click="addProduct({{ product.pk }})"> 
+                                        <i class="icon-bag"></i> 
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row centered margin-bottom-m">
+            <ul class="pagination nav navbar-nav">
+                {% if products.has_previous %}
+                <li><a href="?page={{ products.previous_page_number }}"><i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                {% for page in products.paginator.page_range %}
+                <li class="{% if products.number == page  %}active{% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
+                {% endfor %}
+
+                {% if products.has_next %}
+                <li> <a href="?page={{ products.next_page_number }}"><i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock content %} 
+
