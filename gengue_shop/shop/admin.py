@@ -27,7 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 @admin.register(Sale)
-class ProductAdmin(admin.ModelAdmin):
+class SaleAdmin(admin.ModelAdmin):
     list_display = ('user', 'get_products', 'created', 'get_total',)
     search_fields = ('user__first_name', 'user__last_name', 'user__username',
                      'products__name', 'created')
@@ -49,3 +49,9 @@ class ProductAdmin(admin.ModelAdmin):
 
     get_products.allow_tags = True
     get_products.short_description = 'Productos'
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
